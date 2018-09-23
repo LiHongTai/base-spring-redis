@@ -1,5 +1,6 @@
 package com.roger.manager;
 
+import com.sun.corba.se.impl.oa.toa.TOA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -15,16 +16,31 @@ public class RedisCacheManager {
     @Autowired
     private RedisTemplate<String,Object> redisTemplate;
 
+    public boolean hasKey(String key){
+        return redisTemplate.hasKey(key);
+    }
+
     public Object get(String key){
         return redisTemplate.opsForValue().get(key);
     }
 
     public void set(String key,Object value){
+        set(key,value,-1);
+    }
+
+    public void set(String key,Object value,long time){
         redisTemplate.opsForValue().set(key,value);
+        expire(key,time,TimeUnit.SECONDS);
     }
 
     public boolean setNX(String key,Object value){
-      return redisTemplate.opsForValue().setIfAbsent(key,value);
+        return setNX(key,value,-1);
+    }
+
+    public boolean setNX(String key,Object value,long time){
+      boolean ifAbsent = redisTemplate.opsForValue().setIfAbsent(key,value);
+      expire(key,time,TimeUnit.SECONDS);
+      return ifAbsent;
     }
 
     public long del(String... key){
@@ -34,6 +50,16 @@ public class RedisCacheManager {
     }
 
     public boolean expire(String key,long time,TimeUnit timeUnit){
-        return redisTemplate.expire(key,time,timeUnit);
+     if(time <= 0)
+     return true;
+     return redisTemplate.expire(key,time,timeUnit);
+     }
+
+     /**
+     *
+     * @return 返回0 代表永久有效
+     */
+    public long getExpire(String key){
+        return redisTemplate.getExpire(key,TimeUnit.SECONDS);
     }
 }
