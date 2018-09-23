@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class TestRedisCacheManager extends SpringBaseTestSuit {
 
     @Autowired(required = false)
-    private RedisCacheManager redisCacheManager;
+    private RedisCacheManager<String> redisCacheManager;
 
     @Test
     public void testRedisCofig(){
