@@ -43,4 +43,20 @@ public class TestRedisCacheManager extends SpringBaseTestSuit {
         Assert.assertTrue(delCount == 1);
 
     }
+
+    @Test
+    public void testBit(){
+        redisCacheManager.setBit("client",105,true);
+        boolean isOnline = redisCacheManager.getBit("client",105);
+        Assert.assertTrue(isOnline);
+
+        isOnline = redisCacheManager.getBit("client",106);
+        Assert.assertFalse(isOnline);
+
+        isOnline = redisCacheManager.getBit("server",106);
+        Assert.assertFalse(isOnline);
+
+        long delCount = redisCacheManager.del("client");
+        Assert.assertTrue(delCount == 1);
+    }
 }

@@ -62,4 +62,12 @@ public class RedisCacheManager {
     public long getExpire(String key){
         return redisTemplate.getExpire(key,TimeUnit.SECONDS);
     }
+
+    public void setBit(String key,long id,boolean state){
+        redisTemplate.opsForValue().setBit(key,id,state);
+    }
+
+    public boolean getBit(String key,long id){
+        return redisTemplate.opsForValue().getBit(key,id);
+    }
 }
