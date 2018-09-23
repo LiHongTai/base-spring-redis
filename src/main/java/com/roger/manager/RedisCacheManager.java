@@ -1,6 +1,5 @@
 package com.roger.manager;
 
-import com.sun.corba.se.impl.oa.toa.TOA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -8,7 +7,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 @Component
