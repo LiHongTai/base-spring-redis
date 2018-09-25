@@ -39,7 +39,9 @@ public class RedisCacheManager<T> {
 
     public boolean setNX(String key,T value,long time){
       boolean ifAbsent = redisTemplate.opsForValue().setIfAbsent(key,value);
-      expire(key,time,TimeUnit.SECONDS);
+      if(ifAbsent){
+          expire(key,time,TimeUnit.SECONDS);
+      }
       return ifAbsent;
     }
 
