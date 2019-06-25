@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.PropertiesPropertySource;
+import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.RedisSentinelConfiguration;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
@@ -70,6 +71,7 @@ public class RedisSentinelConfig extends CachingConfigurerSupport {
         }
         PropertiesPropertySource propertySource = new PropertiesPropertySource("redisSentinelNodes", prop);
         RedisSentinelConfiguration redisSentinelConfiguration = new RedisSentinelConfiguration(propertySource);
+        redisSentinelConfiguration.setPassword(RedisPassword.none());
 
         JedisClientConfiguration.JedisPoolingClientConfigurationBuilder
                 jedisPoolConfigBuilder = (JedisClientConfiguration.JedisPoolingClientConfigurationBuilder) JedisClientConfiguration.builder();
