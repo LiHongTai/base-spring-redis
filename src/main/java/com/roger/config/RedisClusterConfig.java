@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.PropertiesPropertySource;
 import org.springframework.data.redis.connection.RedisClusterConfiguration;
+import org.springframework.data.redis.connection.RedisPassword;
 import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -69,6 +70,7 @@ public class RedisClusterConfig extends CachingConfigurerSupport {
         }
         PropertiesPropertySource propertySource = new PropertiesPropertySource("clusterNodes", prop);
         RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration(propertySource);
+        redisClusterConfiguration.setPassword(RedisPassword.none());
 
         JedisClientConfiguration.JedisPoolingClientConfigurationBuilder
                 jedisPoolConfigBuilder = (JedisClientConfiguration.JedisPoolingClientConfigurationBuilder) JedisClientConfiguration.builder();
